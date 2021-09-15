@@ -1,0 +1,11 @@
+.header {
+  position: fixed;
+  height: var(--height-header);
+  width: 100%;
+  background: linear-gradient(to right, var(--color-blue), deepskyblue, white);
+  color: white;
+  padding-left: 20px;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  line-height: var(--height-header);
+}

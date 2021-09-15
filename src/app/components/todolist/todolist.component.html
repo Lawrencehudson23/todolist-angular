@@ -1,0 +1,22 @@
+<main class="content">
+  <section class="todoList">
+    <header class="todoList-header">To-do List</header>
+    <form (submit) ="addTodo(todoInput)">
+      <input type="text" class="todoList-input"
+             id="todoList-input"
+             placeholder="put input here"
+             name="todoInput"
+             [(ngModel)]="todoInput"
+      >
+    </form>
+
+    <ul id="todoList-content" *ngIf="!isLoading; else elseCase">
+      <li *ngFor="let item of todolist" >
+        <span>{{item.title}}</span>
+        <button (click)="removeTodo(item.id)">X</button>
+      </li>
+
+    </ul>
+    <ng-template #elseCase><h2>{{loadingMessage}}</h2></ng-template>
+  </section>
+</main>
