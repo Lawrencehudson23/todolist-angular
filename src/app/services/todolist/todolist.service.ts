@@ -1,43 +1,25 @@
-import { Injectable } from "@angular/core";
-import { Observable, Subject, Subscription } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Todo } from '../../models/todo.interface';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class TodolistService {
-  url = "https://jsonplaceholder.typicode.com/todos";
+  url = 'https://jsonplaceholder.typicode.com/todos';
 
   constructor(private http: HttpClient) {}
 
   getTodos(): Observable<any> {
-    return this.http.get(this.url).pipe(
-      map((data: any) => {
-        const fixedData = data.map((ele: any) => {
-          return {
-            id: ele.id,
-            title: ele.title,
-          };
-        });
-        return fixedData;
-      })
-    );
+    return this.http.get(this.url);
   }
 
-  addTodo(todo: Object): void {
+  addTodo(todo: Todo): void {
     this.http.post(this.url, todo);
   }
 
-  removeTodo(id: any): void {
-    this.http.delete([this.url, +id].join("/"));
+  removeTodo(id: number): void {
+    this.http.delete([this.url, +id].join('/'));
   }
-
-  //Note: Fake api
-  // getFakeApi():Promise<unknown> {
-  //   const resultPromise = new Promise((resolve,_reject) => {
-  //     setTimeout(()=>{resolve('Fake Data')},1500);
-  //   });
-  //   return resultPromise;
-  // }
 }
