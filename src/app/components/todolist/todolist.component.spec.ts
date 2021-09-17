@@ -1,10 +1,15 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 
-import {TodolistComponent} from './todolist.component';
-import {TodolistService} from "../../services/todolist/todolist.service";
-import {from, of} from "rxjs";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {FormsModule} from "@angular/forms";
+import { TodolistComponent } from './todolist.component';
+import { TodolistService } from '../../services/todolist/todolist.service';
+import { from, of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 
 describe('TodolistComponent', () => {
   let component: TodolistComponent;
@@ -14,8 +19,7 @@ describe('TodolistComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [TodolistComponent],
       imports: [HttpClientTestingModule, FormsModule],
-    })
-      .compileComponents(); //won't need this if build by webpack
+    }).compileComponents(); //won't need this if build by webpack
   });
 
   beforeEach(() => {
@@ -23,17 +27,19 @@ describe('TodolistComponent', () => {
     component = fixture.debugElement.componentInstance;
   });
 
-  it('should create todolist', () => {
+  it('should create todo', () => {
     expect(component).toBeTruthy();
   });
 
   // Test loading
-  it('should display todolist loading... if isLoading is true', () => {
+  it('should display todo loading... if isLoading is true', () => {
     component.isLoading = true;
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h2').textContent).toContain(component.loadingMessage);
-  })
+    expect(compiled.querySelector('h2').textContent).toContain(
+      component.loadingMessage
+    );
+  });
 
   // Test getTodos services
   it('should fetch todos from the server', async () => {
@@ -60,11 +66,11 @@ describe('TodolistComponent', () => {
     const spy = spyOn(todolistService, 'getTodos').and.returnValues(of(todos));
     // component.ngOnInit();
     fixture.detectChanges();
-    expect(component.todolist).toEqual(todos)
+    expect(component.todolist).toEqual(todos);
     // Note: if promise
 
     //  fixture.whenStable().then(() => {
-    //   expect(component.todolist).toEqual(component.todolist)
+    //   expect(component.todo).toEqual(component.todo)
     //   })
   });
 
@@ -90,6 +96,6 @@ describe('TodolistComponent', () => {
   //   // component.ngOnInit();
   //   fixture.detectChanges();
   //   tick();
-  //   expect(component.todolist).toEqual(todos)
+  //   expect(component.todo).toEqual(todos)
   // });
 });

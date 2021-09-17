@@ -9,12 +9,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { TodolistComponent } from './components/todolist/todolist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './ngRx';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import * as fromApp from './ngRx';
+import { TodoEffects } from './state/todo/todo.effects';
+import { TodoReducer } from './state/todo/todo.reducer';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, TodolistComponent],
@@ -24,18 +24,23 @@ import * as fromApp from './ngRx';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    StoreRouterConnectingModule.forRoot(),
-    StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-    }),
-    EffectsModule.forRoot([]),
-    StoreModule.forFeature(fromApp.appFeatureKey, fromApp.reducers, {
-      metaReducers: fromApp.metaReducers,
-    }),
+    StoreModule.forRoot(
+      { todoState: TodoReducer },
+      {
+        runtimeChecks: {
+          strictStateImmutability: false,
+          strictActionImmutability: false,
+        },
+      }
+    ),
+    !environment.production
+      ? StoreDevtoolsModule.instrument({
+          maxAge: 25, // Retains last 25 states
+          logOnly: false, //environment.production, // Restrict extension to log-only mode
+          autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+        })
+      : [],
+    EffectsModule.forRoot([TodoEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],
