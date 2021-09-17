@@ -1,5 +1,0 @@
-export enum TODOLIST_ACTIONS {
-  GET_TODOS = '[Todolist] GET_TODOS',
-  GET_TODOS_SUCCESS = '[Todolist] GET_TODOS_SUCCESS',
-  GET_TODOS_FAILURE = '[Todolist] GET_TODOS_FAILURE',
-}

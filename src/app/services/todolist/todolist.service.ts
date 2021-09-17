@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Todo } from '../../models/todo.interface';
+import { Todo } from '../../state/todo/todo.state';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class TodolistService {
 
   constructor(private http: HttpClient) {}
 
-  getTodos(): Observable<any> {
+  getTodos() {
     return this.http.get(this.url);
   }
 

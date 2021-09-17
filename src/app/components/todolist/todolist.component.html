@@ -11,9 +11,9 @@
     </form>
 
     <ul id="todoList-content" *ngIf="!isLoading; else elseCase">
-      <li *ngFor="let item of todolist" >
-        <span>{{item.title}}</span>
-        <button (click)="removeTodo(item.id)">X</button>
+      <li *ngFor="let item of todolist$ | async" >
+        <span>{{item?.title}}</span>
+        <button (click)="removeTodo(item?.id)">X</button>
       </li>
 
     </ul>
