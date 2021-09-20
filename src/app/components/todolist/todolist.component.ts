@@ -13,7 +13,7 @@ import { selectTodos, selectTodoState } from '../../state/todo/todo.selectors';
   styleUrls: ['./todolist.component.css'],
 })
 export class TodolistComponent implements OnInit, OnDestroy {
-  todolist$!: Observable<Todo[]>;
+  todolist$ = this.store.select(selectTodos);
   todoInput: string = '';
   subscription = new Subscription();
   title = 'todo-angular';

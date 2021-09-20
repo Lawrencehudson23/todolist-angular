@@ -25,7 +25,7 @@ import { TodoReducer } from './state/todo/todo.reducer';
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot(
-      { todoState: TodoReducer },
+      { todos: TodoReducer },
       {
         runtimeChecks: {
           strictStateImmutability: false,
@@ -36,8 +36,8 @@ import { TodoReducer } from './state/todo/todo.reducer';
     !environment.production
       ? StoreDevtoolsModule.instrument({
           maxAge: 25, // Retains last 25 states
-          logOnly: false, //environment.production, // Restrict extension to log-only mode
-          autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+          logOnly: environment.production, // Restrict extension to log-only mode
+          // autoPause: true, // Pauses recording actions and state changes when the extension window is not open
         })
       : [],
     EffectsModule.forRoot([TodoEffects]),
