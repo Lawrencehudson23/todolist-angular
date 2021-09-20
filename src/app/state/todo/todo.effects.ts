@@ -4,8 +4,13 @@ import { TodolistService } from '../../services/todolist/todolist.service';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { TODO_ACTIONS_TYPES } from './todo.action-types';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { getTodos, getTodosFailure, getTodosSuccess } from './todo.actions';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import {
+  addTodo,
+  getTodos,
+  getTodosFailure,
+  getTodosSuccess,
+} from './todo.actions';
 
 @Injectable()
 export class TodoEffects {
@@ -30,11 +35,19 @@ export class TodoEffects {
     )
   );
 
-  // private loadAllTodos() {
-  //   return this.todolistService
-  //     .getTodos()
-  //     .pipe(
-  //       map((todos) => ({ type: TODO_ACTIONS_TYPES.GET_TODOS_SUCCESS, todos }))
-  //     );
-  // }
+  // AddTodo$: Observable<Action> = createEffect(()=>
+  // this.action$.pipe(
+  //   of(addTodo),
+  //   switchMap(action) => this.todolistService.addTodo(action.payload).pipe(
+  //     mergeMap((=>this.loadAllTodos()))
+  // )
+  // ))
+
+  private loadAllTodos() {
+    return this.todolistService
+      .getTodos()
+      .pipe(
+        map((todos) => ({ type: TODO_ACTIONS_TYPES.GET_TODOS_SUCCESS, todos }))
+      );
+  }
 }
